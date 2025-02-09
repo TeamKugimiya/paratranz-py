@@ -7,7 +7,7 @@ from .base import ParaTranzAPI
 
 class Files(ParaTranzAPI):
     """
-    ParaTranz 檔案 API 類別。
+    ParaTranz 檔案 API 類別
     ParaTranz Files API class.
     """
     def __init__(self, *args, **kwargs):
