@@ -33,8 +33,6 @@ class Projects(ParaTranzAPI):
         except requests.RequestException as e:
             logger.error(f"Unexpected error: {str(e)}")
 
-        return None
-
     def create_project(
         self, project_name: str, project_description: str, source_lang: str,
         dest_lang: str, game_name: str, privacy_mode: int, download_mode: int,
@@ -145,8 +143,6 @@ class Projects(ParaTranzAPI):
             logger.error(f"HTTP error occurred: {e.response.status_code}")
         except requests.RequestException as e:
             logger.error(f"Unexpected error: {str(e)}")
-
-        return None
 
     def update_project(
         self, project_id: int,
