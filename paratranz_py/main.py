@@ -1,4 +1,5 @@
 from .api.projects import Projects
+from .api.files import Files
 
 
 class ParaTranz:
@@ -25,6 +26,13 @@ class ParaTranz:
     @property
     def projects(self):
         return Projects(
+            api_headers=self._headers,
+            api_url=self._api_url
+        )
+
+    @property
+    def files(self):
+        return Files(
             api_headers=self._headers,
             api_url=self._api_url
         )
