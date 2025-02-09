@@ -1,4 +1,4 @@
-from paratranz.api.projects import Projects
+from .api.projects import Projects
 
 class ParaTranz:
     __slots__ = ("_api_token", "_api_url", "_headers")
