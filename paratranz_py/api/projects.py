@@ -3,6 +3,7 @@ from loguru import logger
 
 from .base import ParaTranzAPI
 
+
 class Projects(ParaTranzAPI):
     """
     ParaTranz 專案 API 類別。

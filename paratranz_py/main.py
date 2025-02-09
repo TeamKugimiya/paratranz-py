@@ -1,11 +1,12 @@
 from .api.projects import Projects
 
+
 class ParaTranz:
     __slots__ = ("_api_token", "_api_url", "_headers")
 
     DEFAULT_API_URL = "https://paratranz.cn/api"
 
-    def __init__(self, api_token: str=None, api_url: str=None):
+    def __init__(self, api_token: str = None, api_url: str = None):
         """
         初始化 ParaTranz 類別。
         Initialize the ParaTranz class.
@@ -25,5 +26,5 @@ class ParaTranz:
     def projects(self):
         return Projects(
             api_headers=self._headers,
-            api_url=self._api_url            
+            api_url=self._api_url
         )
