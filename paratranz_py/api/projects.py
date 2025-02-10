@@ -1,6 +1,3 @@
-import requests
-
-from loguru import logger
 from .base import ParaTranzAPI
 
 
@@ -13,25 +10,14 @@ class Projects(ParaTranzAPI):
         super().__init__(*args, **kwargs)
         self._projects_url = f"{self._api_url}/projects"
 
-    def get_projects(self) -> dict | None:
+    def get_projects(self) -> dict:
         """獲取 ParaTranz 所有專案資訊 | Get all projects information from ParaTranz.
 
         Returns:
             dict:
                 所有專案資訊 | All projects information.
         """
-        try:
-            response = self.session.get(self._projects_url, timeout=10)
-            response.raise_for_status()
-            return response.json()
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code}")
-        except requests.RequestException as e:
-            logger.error(f"Unexpected error: {str(e)}")
+        return self._request("GET", self._projects_url)
 
     def create_project(
         self, project_name: str, project_description: str, source_lang: str,
@@ -104,22 +90,9 @@ class Projects(ParaTranzAPI):
             "reviewMode": review_mode,
             "joinMode": join_mode
         }
-        try:
-            response = self.session.post(
-                self._projects_url, json=project_data, timeout=10
-            )
-            response.raise_for_status()
-            return response.json()
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code}")
-        except requests.RequestException as e:
-            logger.error(f"Unexpected error: {str(e)}")
+        return self._request("POST", self._projects_url, json=project_data) # noqa
 
-    def get_project(self, project_id: int) -> dict | None:
+    def get_project(self, project_id: int) -> dict:
         """獲取特定 ID 的專案資訊 | Get the project information by the project ID.
 
         Args:
@@ -130,19 +103,7 @@ class Projects(ParaTranzAPI):
             dict:
                 The project information.
         """
-        project_url = f"{self._projects_url}/{project_id}"
-        try:
-            response = self.session.get(project_url, timeout=10)
-            response.raise_for_status()
-            return response.json()
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code}")
-        except requests.RequestException as e:
-            logger.error(f"Unexpected error: {str(e)}")
+        return self._request("GET", f"{self._projects_url}/{project_id}")
 
     def update_project(
         self, project_id: int,
@@ -204,23 +165,11 @@ class Projects(ParaTranzAPI):
             "reviewMode": review_mode,
             "joinMode": join_mode
         }
-        project_url = f"{self._projects_url}/{project_id}"
-        try:
-            response = self.session.put(
-                project_url, json=project_data, timeout=10
-            )
-            response.raise_for_status()
-            return response.json()
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code}")
-        except requests.RequestException as e:
-            logger.error(f"Unexpected error: {str(e)}")
+        return self._request(
+            "PUT", f"{self._projects_url}/{project_id}", json=project_data
+        )
 
-    def delete_project(self, project_id: int) -> requests.status_codes:
+    def delete_project(self, project_id: int) -> int:
         """刪除專案 | Delete the project.
 
         Args:
@@ -228,19 +177,7 @@ class Projects(ParaTranzAPI):
                 專案 ID | The project ID
 
         Returns:
-            requests.status_codes:
+            int:
                 HTTP 狀態碼 | HTTP status code
         """
-        project_url = f"{self._projects_url}/{project_id}"
-        try:
-            response = self.session.delete(project_url, timeout=10)
-            response.raise_for_status()
-            return response.status_code
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code}")
-        except requests.RequestException as e:
-            logger.error(f"Unexpected error: {str(e)}")
+        return self._request("DELETE", f"{self._projects_url}/{project_id}", return_status=True) # noqa

@@ -1,5 +1,3 @@
-import requests
-
 from loguru import logger
 from .base import ParaTranzAPI
 
@@ -40,7 +38,6 @@ class History(ParaTranzAPI):
             dict:
                 帳號歷史記錄 | Account history
         """
-        history_url = f"{self._api_url}/history"
         params = {
             "project": project_id,
             "page": page,
@@ -53,18 +50,8 @@ class History(ParaTranzAPI):
         if type and type not in type_list:
             logger.error(f"Invalid history type: {type}.")
             return
-        try:
-            response = self.session.get(history_url, params=params, timeout=10)
-            response.raise_for_status()
-            return response.json()
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code} - {e.response.text}") # noqa
-        except requests.RequestException as e:
-            logger.error(f"Unexpected error: {str(e)}")
+
+        return self._request("GET", f"{self._api_url}/history", params=params)
 
     def get_file_revisions(
         self, project_id: int, page: int = 1, page_size: int = 50,
@@ -102,16 +89,8 @@ class History(ParaTranzAPI):
         if type and type not in type_list:
             logger.error(f"Invalid history type: {type}.")
             return
-        try:
-            response = self.session.get(history_url, params=params, timeout=10)
-            response.raise_for_status()
-            return response.json()
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code} - {e.response.text}") # noqa
+
+        return self._request("GET", history_url, params=params)
 
     def get_project_term_history(self, project_id: int, term_id: int) -> list:
         """獲取術語歷史 | Get term history
@@ -127,13 +106,4 @@ class History(ParaTranzAPI):
                 術語歷史 | Term history
         """
         history_url = f"{self._projects_url}/{project_id}/terms/{term_id}/history" # noqa
-        try:
-            response = self.session.get(history_url, timeout=10)
-            response.raise_for_status()
-            return response.json()
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code} - {e.response.text}") # noqa
+        return self._request("GET", history_url)

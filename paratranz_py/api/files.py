@@ -1,5 +1,3 @@
-import requests
-
 from pathlib import Path
 from loguru import logger
 from .base import ParaTranzAPI
@@ -25,19 +23,7 @@ class Files(ParaTranzAPI):
             dict:
                 所有檔案資訊 | All files information
         """
-        project_url = f"{self._projects_url}/{project_id}/files"
-        try:
-            response = self.session.get(project_url, timeout=10)
-            response.raise_for_status()
-            return response.json()
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code}")
-        except requests.RequestException as e:
-            logger.error(f"Unexpected error: {str(e)}")
+        return self._request("GET", f"{self._projects_url}/{project_id}/files")
 
     def upload_file(self, project_id: int, file_path: Path, path: str) -> dict: # noqa
         """上傳檔案 | Upload the file.
@@ -58,23 +44,12 @@ class Files(ParaTranzAPI):
         if not file_path.exists():
             logger.error(f"File not found: {file_path}")
             return None
-        try:
-            response = self.session.post(
-                f"{self._projects_url}/{project_id}/files",
-                data={"path": path},
-                files={"file": file_path.open("rb")},
-                timeout=10
-            )
-            response.raise_for_status()
-            return response.json()
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code}")
-        except requests.RequestException as e:
-            logger.error(f"Unexpected error: {str(e)}")
+
+        return self._request(
+            "POST", f"{self._projects_url}/{project_id}/files",
+            data={"path": path},
+            files={"file": file_path.open("rb")}
+        )
 
     def get_file(self, project_id: int, file_id: int) -> dict:
         """獲取特定 ID 的檔案資訊 | Get the file information by the file ID.
@@ -89,19 +64,9 @@ class Files(ParaTranzAPI):
             dict:
                 The file information.
         """
-        file_url = f"{self._projects_url}/{project_id}/files/{file_id}"
-        try:
-            response = self.session.get(file_url, timeout=10)
-            response.raise_for_status()
-            return response.json()
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code}")
-        except requests.RequestException as e:
-            logger.error(f"Unexpected error: {str(e)}")
+        return self._request(
+            "GET", f"{self._projects_url}/{project_id}/files/{file_id}"
+        )
 
     def update_file(self, project_id: int, file_path: Path, file_id: int) -> dict: # noqa
         """更新檔案 | Update the file.
@@ -122,24 +87,13 @@ class Files(ParaTranzAPI):
         if not file_path.exists():
             logger.error(f"File not found: {file_path}")
             return None
-        try:
-            response = self.session.post(
-                f"{self._projects_url}/{project_id}/files/{file_id}",
-                files={"file": file_path.open("rb")},
-                timeout=10
-            )
-            response.raise_for_status()
-            return response.json()
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code}")
-        except requests.RequestException as e:
-            logger.error(f"Unexpected error: {str(e)}")
 
-    def delete_file(self, project_id: int, file_id: int) -> requests.status_codes: # noqa
+        return self._request(
+            "POST", f"{self._projects_url}/{project_id}/files/{file_id}",
+            files={"file": file_path.open("rb")}
+        )
+
+    def delete_file(self, project_id: int, file_id: int) -> int:
         """刪除檔案 | Delete the file.
 
         Args:
@@ -149,24 +103,13 @@ class Files(ParaTranzAPI):
                 檔案 ID | The file ID
 
         Returns:
-            requests.status_codes:
+            int:
                 刪除檔案的狀態碼 | The status code of the file deletion.
         """
-        try:
-            response = self.session.delete(
-                f"{self._projects_url}/{project_id}/files/{file_id}",
-                timeout=10
-            )
-            response.raise_for_status()
-            return response.status_code
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code}")
-        except requests.RequestException as e:
-            logger.error(f"Unexpected error: {str(e)}")
+        return self._request(
+            "DELETE", f"{self._projects_url}/{project_id}/files/{file_id}",
+            return_status=True
+        )
 
     def get_translation_file(self, project_id: int, file_id: int) -> list:
         """獲取翻譯檔案 | Get the translation file.
@@ -181,19 +124,10 @@ class Files(ParaTranzAPI):
             list:
                 翻譯檔案 | The translation
         """
-        file_url = f"{self._projects_url}/{project_id}/files/{file_id}/translation" # noqa
-        try:
-            response = self.session.get(file_url, timeout=10)
-            response.raise_for_status()
-            return response.json()
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code}")
-        except requests.RequestException as e:
-            logger.error(f"Unexpected error: {str(e)}")
+        return self._request(
+            "GET",
+            f"{self._projects_url}/{project_id}/files/{file_id}/translation"
+        )
 
     def update_translation_file(self, project_id: int, file_path: Path, file_id: int, force: bool = False) -> dict: # noqa
         """更新翻譯檔案 | Update the translation file.
@@ -216,20 +150,10 @@ class Files(ParaTranzAPI):
         if not file_path.exists():
             logger.error(f"File not found: {file_path}")
             return None
-        try:
-            response = self.session.post(
-                f"{self._projects_url}/{project_id}/files/{file_id}/translation", # noqa
-                data={"force": force},
-                files={"file": file_path.open("rb")},
-                timeout=10
-            )
-            response.raise_for_status()
-            return response.json()
-        except requests.Timeout:
-            logger.error("Request to ParaTranz API timed out.")
-        except requests.ConnectionError:
-            logger.error("Failed to connect to ParaTranz API.")
-        except requests.HTTPError as e:
-            logger.error(f"HTTP error occurred: {e.response.status_code}")
-        except requests.RequestException as e:
-            logger.error(f"Unexpected error: {str(e)}")
+
+        return self._request(
+            "POST",
+            f"{self._projects_url}/{project_id}/files/{file_id}/translation",
+            data={"force": force},
+            files={"file": file_path.open("rb")}
+        )
