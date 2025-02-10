@@ -1,5 +1,7 @@
 from .api.projects import Projects
+# from .api.strings import Strings
 from .api.files import Files
+from .api.history import History
 from .api.scores import Scores
 
 
@@ -31,6 +33,13 @@ class ParaTranz:
             api_url=self._api_url
         )
 
+    # @property
+    # def strings(self):
+    #     return Strings(
+    #         api_headers=self._headers,
+    #         api_url=self._api_url
+    #     )
+
     @property
     def files(self):
         return Files(
@@ -41,6 +50,13 @@ class ParaTranz:
     @property
     def scores(self):
         return Scores(
+            api_headers=self._headers,
+            api_url=self._api_url
+        )
+
+    @property
+    def history(self):
+        return History(
             api_headers=self._headers,
             api_url=self._api_url
         )
