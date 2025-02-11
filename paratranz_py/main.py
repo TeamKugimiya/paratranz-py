@@ -2,6 +2,7 @@ from .api.projects import Projects
 # from .api.strings import Strings
 from .api.files import Files
 from .api.history import History
+from .api.members import Members
 from .api.artifacts import Artifacts
 from .api.scores import Scores
 
@@ -62,12 +63,12 @@ class ParaTranz:
     #         api_url=self._api_url
     #     )
 
-    # @property
-    # def members(self):
-    #     return Members(
-    #         api_headers=self._headers,
-    #         api_url=self._api_url
-    #     )
+    @property
+    def members(self):
+        return Members(
+            api_headers=self._headers,
+            api_url=self._api_url
+        )
 
     @property
     def artifacts(self):
