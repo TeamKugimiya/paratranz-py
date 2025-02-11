@@ -1,6 +1,6 @@
 [project]
 name = "paratranz-py"
-version = "0.5.0"
+version = "0.6.0"
 description = "A simple ParaTranz Python Package"
 authors = [
     {name = "Miku",email = "26039249+xMikux@users.noreply.github.com"}
