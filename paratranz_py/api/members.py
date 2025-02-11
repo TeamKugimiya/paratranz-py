@@ -62,7 +62,7 @@ class Members(ParaTranzAPI):
         return self._request("POST", member_url, json=data)
 
     def update_member(
-        self, project_id: int, member_uid: int,
+        self, project_id: int, member_id: int,
         permission: int, note: str = None
     ) -> dict:
         """更新專案成員 | Update project member
@@ -70,8 +70,8 @@ class Members(ParaTranzAPI):
         Args:
             project_id (int):
                 專案 ID | Project ID
-            member_uid (int):
-                成員 ID | Member UID
+            member_id (int):
+                成員 ID (不是 UID) | Member ID (not UID)
             permission (int):
                 權限 | Permission
                     1: 翻譯 | Translator
@@ -89,25 +89,25 @@ class Members(ParaTranzAPI):
         if permission not in permission_list:
             logger.error(f"Permission should be one of {permission_list}")
             return
-        member_url = f"{self._projects_url}/{project_id}/members/{member_uid}"
+        member_url = f"{self._projects_url}/{project_id}/members/{member_id}"
         data = {
             "permission": permission,
             "note": note
         }
         return self._request("PUT", member_url, json=data)
 
-    def delete_member(self, project_id: int, member_uid: int) -> int:
+    def delete_member(self, project_id: int, member_id: int) -> int:
         """刪除專案成員 | Delete project member
 
         Args:
             project_id (int):
                 專案 ID | Project ID
             member_uid (int):
-                成員 ID | Member UID
+                成員 ID (不是 UID) | Member ID (not UID)
 
         Returns:
             int:
                 狀態碼 | Status code
         """
-        member_url = f"{self._projects_url}/{project_id}/members/{member_uid}"
+        member_url = f"{self._projects_url}/{project_id}/members/{member_id}"
         return self._request("DELETE", member_url, return_status=True)
