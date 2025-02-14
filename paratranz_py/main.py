@@ -1,5 +1,5 @@
 from .api.projects import Projects
-# from .api.strings import Strings
+from .api.strings import Strings
 from .api.files import Files
 from .api.history import History
 from .api.members import Members
@@ -9,6 +9,14 @@ from .api.scores import Scores
 
 
 class ParaTranz:
+    """
+    ParaTranz class is the main class of the ParaTranz API wrapper.
+
+    Current missing API:
+        - Terms
+        - Issues
+        - Mails
+    """
     __slots__ = ("_api_token", "_api_url", "_headers")
 
     DEFAULT_API_URL = "https://paratranz.cn/api"
@@ -36,12 +44,12 @@ class ParaTranz:
             api_url=self._api_url
         )
 
-    # @property
-    # def strings(self):
-    #     return Strings(
-    #         api_headers=self._headers,
-    #         api_url=self._api_url
-    #     )
+    @property
+    def strings(self):
+        return Strings(
+            api_headers=self._headers,
+            api_url=self._api_url
+        )
 
     @property
     def files(self):
