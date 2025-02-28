@@ -1,6 +1,6 @@
 [project]
 name = "paratranz-py"
-version = "0.7.0"
+version = "0.7.1"
 description = "A simple ParaTranz Python Package"
 readme = "README.md"
 requires-python = ">=3.13"
