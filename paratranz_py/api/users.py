@@ -6,6 +6,7 @@ class Users(ParaTranzAPI):
     ParaTranz 使用者 API 類別
     ParaTranz Users API class.
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._users_url = f"{self._api_url}/users"
@@ -23,11 +24,7 @@ class Users(ParaTranzAPI):
         return self._request("GET", f"{self._users_url}/{user_id}")
 
     def update_user(
-        self,
-        user_id: int,
-        nickname: str = None,
-        bio: str = None,
-        avatar: str = None
+        self, user_id: int, nickname: str = None, bio: str = None, avatar: str = None
     ) -> dict:
         """更新使用者資訊 | Update user info.
 
@@ -44,9 +41,5 @@ class Users(ParaTranzAPI):
         Returns:
             dict: 更新後的使用者資訊 | Updated user info.
         """
-        data = {
-            "nickname": nickname,
-            "bio": bio,
-            "avatar": avatar
-        }
+        data = {"nickname": nickname, "bio": bio, "avatar": avatar}
         return self._request("PUT", f"{self._users_url}/{user_id}", json=data)

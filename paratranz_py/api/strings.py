@@ -6,6 +6,7 @@ class Strings(ParaTranzAPI):
     ParaTranz 詞條 API 類別
     ParaTranz Strings API class.
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._projects_url = f"{self._api_url}/projects"
@@ -16,7 +17,7 @@ class Strings(ParaTranzAPI):
         file_id: int = None,
         stage: int = 0,
         page: int = 1,
-        page_size: int = 50
+        page_size: int = 50,
     ) -> dict:
         """獲取詞條資訊 | Get strings information
 
@@ -43,12 +44,7 @@ class Strings(ParaTranzAPI):
             dict:
                 詞條資訊 | Strings information
         """
-        data = {
-            "file": file_id,
-            "stage": stage,
-            "page": page,
-            "pageSize": page_size
-        }
+        data = {"file": file_id, "stage": stage, "page": page, "pageSize": page_size}
         strings_url = f"{self._projects_url}/{project_id}/strings"
         return self._request("GET", strings_url, params=data)
 
@@ -102,11 +98,7 @@ class Strings(ParaTranzAPI):
     #     }
     #     return self._request("POST", strings_url, json=data)
 
-    def get_string(
-        self,
-        project_id: int,
-        string_id: int
-    ) -> dict:
+    def get_string(self, project_id: int, string_id: int) -> dict:
         """獲取單一詞條資訊 | Get single string information
 
         Args:
@@ -130,7 +122,7 @@ class Strings(ParaTranzAPI):
         original_text: str = None,
         translate_text: str = None,
         stage: int = None,
-        context: str = None
+        context: str = None,
     ) -> dict:
         """更新詞條 | Update string
 
@@ -167,15 +159,11 @@ class Strings(ParaTranzAPI):
             "original": original_text,
             "translation": translate_text,
             "stage": stage,
-            "context": context
+            "context": context,
         }
         return self._request("PUT", strings_url, json=data)
 
-    def delete_string(
-        self,
-        project_id: int,
-        string_id: int
-    ) -> int:
+    def delete_string(self, project_id: int, string_id: int) -> int:
         """刪除詞條 | Delete string
 
         Args:

@@ -2,18 +2,14 @@
 	"name": "Ubuntu",
 	"image": "mcr.microsoft.com/devcontainers/base:jammy",
 	"features": {
-		"ghcr.io/devcontainers/features/python:1": {
-			"installTools": true,
-			"version": "3.12"
-		},
-		"ghcr.io/devcontainers-extra/features/poetry:2": {
-			"version": "2.0.1"
-		}
+		"ghcr.io/jsburckhardt/devcontainer-features/uv:1": {}
 	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-python.flake8"
+				"ms-python.python",
+				"charliermarsh.ruff",
+				"GitHub.copilot"
 			]
 		}
 	}

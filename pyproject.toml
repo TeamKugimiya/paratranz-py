@@ -2,26 +2,14 @@
 name = "paratranz-py"
 version = "0.7.0"
 description = "A simple ParaTranz Python Package"
-authors = [
-    {name = "Miku",email = "26039249+xMikux@users.noreply.github.com"}
-]
-license = {text = "MIT"}
 readme = "README.md"
-requires-python = ">=3.12,<4.0"
+requires-python = ">=3.13"
 dependencies = [
-    "pooch (>=1.8.2,<2.0.0)",
-    "requests (>=2.32.3,<3.0.0)",
-    "loguru (>=0.7.3,<0.8.0)"
+    "loguru==0.7.3",
+    "pooch==1.8.2",
 ]
 
-[tool.poetry]
-packages = [
-    { include = "paratranz_py" }
+[dependency-groups]
+dev = [
+    "ruff==0.9.9",
 ]
-
-[tool.poetry.group.dev.dependencies]
-flake8 = "^7.1.1"
-
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"

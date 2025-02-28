@@ -6,6 +6,7 @@ class Scores(ParaTranzAPI):
     ParaTranz 成員貢獻 API 類別
     ParaTranz Scores API class.
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._projects_url = f"{self._api_url}/projects"

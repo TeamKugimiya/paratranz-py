@@ -9,6 +9,7 @@ class Artifacts(ParaTranzAPI):
     ParaTranz Artifacts API 類別
     ParaTranz Artifacts API class.
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._projects_url = f"{self._api_url}/projects"
@@ -42,10 +43,11 @@ class Artifacts(ParaTranzAPI):
         return self._request("POST", artifacts_url)
 
     def download_artifacts(
-        self, project_id: str,
+        self,
+        project_id: str,
         path: Path = None,
         artifact_name: str = "artifact.zip",
-        extract_path: Path = None
+        extract_path: Path = None,
     ):
         """獲取 Artifacts 下載連結 | Get Artifacts download URL
 
@@ -53,7 +55,7 @@ class Artifacts(ParaTranzAPI):
             project_id (str):
                 專案 ID | Project ID
             path (Path):
-                儲存檔案的路徑 (若為 None 的話，將會儲存於 pooch 的快取中) | Path to save the file (if None, it will be saved in the pooch cache) # noqa
+                儲存檔案的路徑 (若為 None 的話，將會儲存於 pooch 的快取中) | Path to save the file (if None, it will be saved in the pooch cache)
             artifact_name (str):
                 Artifacts 檔案名稱 | Artifacts file name (default: "artifact.zip")
             extract_path (Path):
@@ -74,7 +76,7 @@ class Artifacts(ParaTranzAPI):
                 fname=artifact_name,
                 known_hash=None,
                 processor=extract_dir_path,
-                downloader=HTTPDownloader(headers=self._api_headers)
+                downloader=HTTPDownloader(headers=self._api_headers),
             )
         except Exception as e:
             logger.error(f"Download Failed! Error: {str(e)}")

@@ -6,6 +6,7 @@ class Projects(ParaTranzAPI):
     ParaTranz 專案 API 類別
     ParaTranz Projects API class.
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._projects_url = f"{self._api_url}/projects"
@@ -20,9 +21,17 @@ class Projects(ParaTranzAPI):
         return self._request("GET", self._projects_url)
 
     def create_project(
-        self, project_name: str, project_description: str, source_lang: str,
-        dest_lang: str, game_name: str, privacy_mode: int, download_mode: int,
-        issue_mode: int, review_mode: int, join_mode: int
+        self,
+        project_name: str,
+        project_description: str,
+        source_lang: str,
+        dest_lang: str,
+        game_name: str,
+        privacy_mode: int,
+        download_mode: int,
+        issue_mode: int,
+        review_mode: int,
+        join_mode: int,
     ) -> dict:
         """建立新專案 | Create a new project.
 
@@ -88,9 +97,9 @@ class Projects(ParaTranzAPI):
             "download": download_mode,
             "issueMode": issue_mode,
             "reviewMode": review_mode,
-            "joinMode": join_mode
+            "joinMode": join_mode,
         }
-        return self._request("POST", self._projects_url, json=project_data) # noqa
+        return self._request("POST", self._projects_url, json=project_data)
 
     def get_project(self, project_id: int) -> dict:
         """獲取特定 ID 的專案資訊 | Get the project information by the project ID.
@@ -106,10 +115,16 @@ class Projects(ParaTranzAPI):
         return self._request("GET", f"{self._projects_url}/{project_id}")
 
     def update_project(
-        self, project_id: int,
-        project_name: str, project_description: str,
-        game_name: str, privacy_mode: int, download_mode: int,
-        issue_mode: int, review_mode: int, join_mode: int
+        self,
+        project_id: int,
+        project_name: str,
+        project_description: str,
+        game_name: str,
+        privacy_mode: int,
+        download_mode: int,
+        issue_mode: int,
+        review_mode: int,
+        join_mode: int,
     ) -> dict:
         """更新專案資訊 | Update the project information.
 
@@ -163,7 +178,7 @@ class Projects(ParaTranzAPI):
             "download": download_mode,
             "issueMode": issue_mode,
             "reviewMode": review_mode,
-            "joinMode": join_mode
+            "joinMode": join_mode,
         }
         return self._request(
             "PUT", f"{self._projects_url}/{project_id}", json=project_data
@@ -180,4 +195,6 @@ class Projects(ParaTranzAPI):
             int:
                 HTTP 狀態碼 | HTTP status code
         """
-        return self._request("DELETE", f"{self._projects_url}/{project_id}", return_status=True) # noqa
+        return self._request(
+            "DELETE", f"{self._projects_url}/{project_id}", return_status=True
+        )

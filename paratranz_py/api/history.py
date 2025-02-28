@@ -7,13 +7,19 @@ class History(ParaTranzAPI):
     ParaTranz 檔案 API 類別
     ParaTranz Files API class.
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._projects_url = f"{self._api_url}/projects"
 
     def get_history(
-        self, project_id: int, page: int = 1, page_size: int = 50,
-        uid: int = None, tid: int = None, type: str = "text"
+        self,
+        project_id: int,
+        page: int = 1,
+        page_size: int = 50,
+        uid: int = None,
+        tid: int = None,
+        type: str = "text",
     ) -> dict:
         """獲取專案歷史記錄 | Get project history
 
@@ -44,7 +50,7 @@ class History(ParaTranzAPI):
             "pageSize": page_size,
             "uid": uid,
             "tid": tid,
-            "type": type
+            "type": type,
         }
         type_list = ["text", "import", "comment"]
         if type and type not in type_list:
@@ -54,8 +60,12 @@ class History(ParaTranzAPI):
         return self._request("GET", f"{self._api_url}/history", params=params)
 
     def get_file_revisions(
-        self, project_id: int, page: int = 1, page_size: int = 50,
-        file_id: int = None, type: str = None
+        self,
+        project_id: int,
+        page: int = 1,
+        page_size: int = 50,
+        file_id: int = None,
+        type: str = None,
     ) -> dict:
         """獲取檔案歷史記錄 | Get file history
 
@@ -79,12 +89,7 @@ class History(ParaTranzAPI):
                 檔案歷史記錄 | File history
         """
         history_url = f"{self._projects_url}/{project_id}/files/revisions"
-        params = {
-            "page": page,
-            "pageSize": page_size,
-            "file": file_id,
-            "type": type
-        }
+        params = {"page": page, "pageSize": page_size, "file": file_id, "type": type}
         type_list = ["create", "update", "import"]
         if type and type not in type_list:
             logger.error(f"Invalid history type: {type}.")
@@ -105,5 +110,5 @@ class History(ParaTranzAPI):
             list:
                 術語歷史 | Term history
         """
-        history_url = f"{self._projects_url}/{project_id}/terms/{term_id}/history" # noqa
+        history_url = f"{self._projects_url}/{project_id}/terms/{term_id}/history"
         return self._request("GET", history_url)

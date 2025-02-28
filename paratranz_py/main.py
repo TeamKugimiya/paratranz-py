@@ -17,6 +17,7 @@ class ParaTranz:
         - Issues
         - Mails
     """
+
     __slots__ = ("_api_token", "_api_url", "_headers")
 
     DEFAULT_API_URL = "https://paratranz.cn/api"
@@ -34,68 +35,41 @@ class ParaTranz:
         self._api_url = api_url or self.DEFAULT_API_URL
         self._headers = {
             "Authorization": api_token,
-            "User-Agent": "paratranz-py | Made by @xMikux"
+            "User-Agent": "paratranz-py | Made by @xMikux",
         }
 
     @property
     def projects(self):
-        return Projects(
-            api_headers=self._headers,
-            api_url=self._api_url
-        )
+        return Projects(api_headers=self._headers, api_url=self._api_url)
 
     @property
     def strings(self):
-        return Strings(
-            api_headers=self._headers,
-            api_url=self._api_url
-        )
+        return Strings(api_headers=self._headers, api_url=self._api_url)
 
     @property
     def files(self):
-        return Files(
-            api_headers=self._headers,
-            api_url=self._api_url
-        )
+        return Files(api_headers=self._headers, api_url=self._api_url)
 
     @property
     def history(self):
-        return History(
-            api_headers=self._headers,
-            api_url=self._api_url
-        )
+        return History(api_headers=self._headers, api_url=self._api_url)
 
     # @property
     # def terms(self):
-    #     return Terms(
-    #         api_headers=self._headers,
-    #         api_url=self._api_url
-    #     )
+    #     return Terms(api_headers=self._headers, api_url=self._api_url)
 
     @property
     def members(self):
-        return Members(
-            api_headers=self._headers,
-            api_url=self._api_url
-        )
+        return Members(api_headers=self._headers, api_url=self._api_url)
 
     @property
     def artifacts(self):
-        return Artifacts(
-            api_headers=self._headers,
-            api_url=self._api_url
-        )
+        return Artifacts(api_headers=self._headers, api_url=self._api_url)
 
     @property
     def users(self):
-        return Users(
-            api_headers=self._headers,
-            api_url=self._api_url
-        )
+        return Users(api_headers=self._headers, api_url=self._api_url)
 
     @property
     def scores(self):
-        return Scores(
-            api_headers=self._headers,
-            api_url=self._api_url
-        )
+        return Scores(api_headers=self._headers, api_url=self._api_url)

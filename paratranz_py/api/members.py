@@ -7,6 +7,7 @@ class Members(ParaTranzAPI):
     ParaTranz 成員 API 類別
     ParaTranz Members API class.
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._projects_url = f"{self._api_url}/projects"
@@ -26,8 +27,7 @@ class Members(ParaTranzAPI):
         return self._request("GET", member_url)
 
     def add_member(
-        self, project_id: int, member_uid: int,
-        permission: int, note: str = None
+        self, project_id: int, member_uid: int, permission: int, note: str = None
     ) -> dict:
         """獲取專案成員 | Get project member
 
@@ -54,16 +54,11 @@ class Members(ParaTranzAPI):
             logger.error(f"Permission should be one of {permission_list}")
             return
         member_url = f"{self._projects_url}/{project_id}/members"
-        data = {
-            "uid": member_uid,
-            "permission": permission,
-            "note": note
-        }
+        data = {"uid": member_uid, "permission": permission, "note": note}
         return self._request("POST", member_url, json=data)
 
     def update_member(
-        self, project_id: int, member_id: int,
-        permission: int, note: str = None
+        self, project_id: int, member_id: int, permission: int, note: str = None
     ) -> dict:
         """更新專案成員 | Update project member
 
@@ -90,10 +85,7 @@ class Members(ParaTranzAPI):
             logger.error(f"Permission should be one of {permission_list}")
             return
         member_url = f"{self._projects_url}/{project_id}/members/{member_id}"
-        data = {
-            "permission": permission,
-            "note": note
-        }
+        data = {"permission": permission, "note": note}
         return self._request("PUT", member_url, json=data)
 
     def delete_member(self, project_id: int, member_id: int) -> int:

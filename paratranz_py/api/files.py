@@ -8,12 +8,13 @@ class Files(ParaTranzAPI):
     ParaTranz 檔案 API 類別
     ParaTranz Files API class.
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._projects_url = f"{self._api_url}/projects"
 
     def get_files(self, project_id: int) -> dict:
-        """獲取特定 ID 專案的所有檔案資訊 | Get all files information from a specific project ID. # noqa
+        """獲取特定 ID 專案的所有檔案資訊 | Get all files information from a specific project ID.
 
         Args:
             project_id (int):
@@ -25,7 +26,7 @@ class Files(ParaTranzAPI):
         """
         return self._request("GET", f"{self._projects_url}/{project_id}/files")
 
-    def upload_file(self, project_id: int, file_path: Path, path: str) -> dict: # noqa
+    def upload_file(self, project_id: int, file_path: Path, path: str) -> dict:
         """上傳檔案 | Upload the file.
 
         Args:
@@ -34,7 +35,7 @@ class Files(ParaTranzAPI):
             file_path (Path):
                 要上傳的檔案路徑 | The file path to upload
             path (str):
-                上傳後所在的路徑（不可包含檔案名） | The path to upload to (without the file name) # noqa
+                上傳後所在的路徑（不可包含檔案名） | The path to upload to (without the file name)
 
         Returns:
             dict:
@@ -46,9 +47,10 @@ class Files(ParaTranzAPI):
             return None
 
         return self._request(
-            "POST", f"{self._projects_url}/{project_id}/files",
+            "POST",
+            f"{self._projects_url}/{project_id}/files",
             data={"path": path},
-            files={"file": file_path.open("rb")}
+            files={"file": file_path.open("rb")},
         )
 
     def get_file(self, project_id: int, file_id: int) -> dict:
@@ -68,7 +70,7 @@ class Files(ParaTranzAPI):
             "GET", f"{self._projects_url}/{project_id}/files/{file_id}"
         )
 
-    def update_file(self, project_id: int, file_path: Path, file_id: int) -> dict: # noqa
+    def update_file(self, project_id: int, file_path: Path, file_id: int) -> dict:
         """更新檔案 | Update the file.
 
         Args:
@@ -89,8 +91,9 @@ class Files(ParaTranzAPI):
             return None
 
         return self._request(
-            "POST", f"{self._projects_url}/{project_id}/files/{file_id}",
-            files={"file": file_path.open("rb")}
+            "POST",
+            f"{self._projects_url}/{project_id}/files/{file_id}",
+            files={"file": file_path.open("rb")},
         )
 
     def delete_file(self, project_id: int, file_id: int) -> int:
@@ -107,8 +110,9 @@ class Files(ParaTranzAPI):
                 刪除檔案的狀態碼 | The status code of the file deletion.
         """
         return self._request(
-            "DELETE", f"{self._projects_url}/{project_id}/files/{file_id}",
-            return_status=True
+            "DELETE",
+            f"{self._projects_url}/{project_id}/files/{file_id}",
+            return_status=True,
         )
 
     def get_translation_file(self, project_id: int, file_id: int) -> list:
@@ -125,11 +129,12 @@ class Files(ParaTranzAPI):
                 翻譯檔案 | The translation
         """
         return self._request(
-            "GET",
-            f"{self._projects_url}/{project_id}/files/{file_id}/translation"
+            "GET", f"{self._projects_url}/{project_id}/files/{file_id}/translation"
         )
 
-    def update_translation_file(self, project_id: int, file_path: Path, file_id: int, force: bool = False) -> dict: # noqa
+    def update_translation_file(
+        self, project_id: int, file_path: Path, file_id: int, force: bool = False
+    ) -> dict:
         """更新翻譯檔案 | Update the translation file.
 
         Args:
@@ -155,5 +160,5 @@ class Files(ParaTranzAPI):
             "POST",
             f"{self._projects_url}/{project_id}/files/{file_id}/translation",
             data={"force": force},
-            files={"file": file_path.open("rb")}
+            files={"file": file_path.open("rb")},
         )
