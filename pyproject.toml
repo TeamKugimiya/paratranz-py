@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "loguru==0.7.3",
-    "pooch==1.8.2",
+    "pooch==1.9.0",
 ]
 
 [dependency-groups]
