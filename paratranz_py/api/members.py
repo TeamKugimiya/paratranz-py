@@ -86,6 +86,7 @@ class Members(ParaTranzAPI):
             return
         member_url = f"{self._projects_url}/{project_id}/members/{member_id}"
         data = {"permission": permission, "note": note}
+        data = {k: v for k, v in data.items() if v is not None}
         return self._request("PUT", member_url, json=data)
 
     def delete_member(self, project_id: int, member_id: int) -> int:

@@ -4,8 +4,8 @@ from .base import ParaTranzAPI
 
 class History(ParaTranzAPI):
     """
-    ParaTranz 檔案 API 類別
-    ParaTranz Files API class.
+    ParaTranz 歷史記錄 API 類別
+    ParaTranz History API class.
     """
 
     def __init__(self, *args, **kwargs):

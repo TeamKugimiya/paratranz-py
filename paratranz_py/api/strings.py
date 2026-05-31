@@ -161,6 +161,10 @@ class Strings(ParaTranzAPI):
             "stage": stage,
             "context": context,
         }
+        # Only send fields that were explicitly provided; sending original/key as null
+        # causes ParaTranz to treat them as admin-only field changes and reject the
+        # request for non-admin users.
+        data = {k: v for k, v in data.items() if v is not None}
         return self._request("PUT", strings_url, json=data)
 
     def delete_string(self, project_id: int, string_id: int) -> int:

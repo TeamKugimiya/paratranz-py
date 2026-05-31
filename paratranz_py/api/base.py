@@ -60,7 +60,10 @@ class ParaTranzAPI:
         except requests.ConnectionError:
             logger.error(f"Failed to connect: {method} {url}")
         except requests.HTTPError as e:
-            logger.error(f"HTTP error on: {method} {str(e)}")
+            resp = e.response
+            body = resp.text if resp is not None else str(e)
+            status = resp.status_code if resp is not None else "?"
+            logger.error(f"HTTP error on {method} {url}: {status} {body}")
         except requests.RequestException as e:
             logger.error(f"Unexpected error during {method} {url}: {str(e)}")
 

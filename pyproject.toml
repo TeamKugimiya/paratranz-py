@@ -11,5 +11,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "pytest>=8.0",
+    "pytest-mock>=3.14",
     "ruff==0.15.15",
 ]
