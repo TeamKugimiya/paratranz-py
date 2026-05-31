@@ -33,7 +33,9 @@ class TestRequest:
     def test_returns_status_code_when_return_status_true(self, api):
         resp = _mock_response(status_code=204)
         with patch.object(api.session, "request", return_value=resp):
-            result = api._request("DELETE", f"{BASE_URL}/projects/1", return_status=True)
+            result = api._request(
+                "DELETE", f"{BASE_URL}/projects/1", return_status=True
+            )
         assert result == 204
 
     def test_returns_none_on_timeout(self, api):
