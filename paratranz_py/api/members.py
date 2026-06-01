@@ -29,7 +29,7 @@ class Members(ParaTranzAPI):
     def add_member(
         self, project_id: int, member_uid: int, permission: int, note: str = None
     ) -> dict:
-        """獲取專案成員 | Get project member
+        """新增專案成員 | Add project member
 
         Args:
             project_id (int):
@@ -55,6 +55,7 @@ class Members(ParaTranzAPI):
             return
         member_url = f"{self._projects_url}/{project_id}/members"
         data = {"uid": member_uid, "permission": permission, "note": note}
+        data = {k: v for k, v in data.items() if v is not None}
         return self._request("POST", member_url, json=data)
 
     def update_member(

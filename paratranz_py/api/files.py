@@ -18,7 +18,7 @@ class Files(ParaTranzAPI):
 
         Args:
             project_id (int):
-                專案 ID｜The project ID
+                專案 ID | The project ID
 
         Returns:
             dict:

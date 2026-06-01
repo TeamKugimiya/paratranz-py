@@ -37,7 +37,7 @@ class History(ParaTranzAPI):
             type (str):
                 歷史記錄類型 | History type (default: "text")
                     text: 詞條歷史 | Term history
-                    import: 導入歷史 | Import history
+                    import: 匯入歷史 | Import history
                     comment: 評論記錄 | Comment history
 
         Returns:

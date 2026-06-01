@@ -117,16 +117,20 @@ class Projects(ParaTranzAPI):
     def update_project(
         self,
         project_id: int,
-        project_name: str,
-        project_description: str,
-        game_name: str,
-        privacy_mode: int,
-        download_mode: int,
-        issue_mode: int,
-        review_mode: int,
-        join_mode: int,
+        project_name: str = None,
+        project_description: str = None,
+        game_name: str = None,
+        privacy_mode: int = None,
+        download_mode: int = None,
+        issue_mode: int = None,
+        review_mode: int = None,
+        join_mode: int = None,
     ) -> dict:
         """更新專案資訊 | Update the project information.
+
+        All fields are optional; only the provided fields are sent. This avoids
+        triggering owner-only permission checks for fields a non-owner manager
+        is not allowed to modify (e.g. privacy, joinMode).
 
         Args:
             project_id (int):
@@ -180,6 +184,7 @@ class Projects(ParaTranzAPI):
             "reviewMode": review_mode,
             "joinMode": join_mode,
         }
+        project_data = {k: v for k, v in project_data.items() if v is not None}
         return self._request(
             "PUT", f"{self._projects_url}/{project_id}", json=project_data
         )

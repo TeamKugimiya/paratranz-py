@@ -41,3 +41,15 @@ class TestAddMember:
         with patch.object(members, "_request", return_value={}) as mock_req:
             members.add_member(project_id=1, member_uid=99, permission=1)
         assert mock_req.called
+
+    def test_note_none_is_omitted(self, members):
+        with patch.object(members, "_request", return_value={}) as mock_req:
+            members.add_member(project_id=1, member_uid=99, permission=1)
+        body = mock_req.call_args.kwargs["json"]
+        assert "note" not in body
+
+    def test_note_sent_when_provided(self, members):
+        with patch.object(members, "_request", return_value={}) as mock_req:
+            members.add_member(project_id=1, member_uid=99, permission=1, note="備註")
+        body = mock_req.call_args.kwargs["json"]
+        assert body["note"] == "備註"

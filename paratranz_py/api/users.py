@@ -42,4 +42,7 @@ class Users(ParaTranzAPI):
             dict: 更新後的使用者資訊 | Updated user info.
         """
         data = {"nickname": nickname, "bio": bio, "avatar": avatar}
+        # Only send fields that were explicitly provided; sending null fields can
+        # wipe existing values on the server.
+        data = {k: v for k, v in data.items() if v is not None}
         return self._request("PUT", f"{self._users_url}/{user_id}", json=data)
