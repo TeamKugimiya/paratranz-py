@@ -5,7 +5,7 @@ description = "A simple ParaTranz Python Package"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "idna==3.17",
+    "idna==3.19",
     "loguru==0.7.3",
     "pooch==1.9.0",
     "requests==2.34.2",
